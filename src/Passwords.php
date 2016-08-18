@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Lookyman\Security;
 
 use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
+use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 use Defuse\Crypto\Key;
 use ParagonIE\ConstantTime\Base64;
 
@@ -20,6 +22,8 @@ final class Passwords
 	 * @param string $hash
 	 * @param Key $key
 	 * @return array
+	 * @throws EnvironmentIsBrokenException
+	 * @throws WrongKeyOrModifiedCiphertextException
 	 */
 	public static function getInfo(string $hash, Key $key): array
 	{
@@ -33,6 +37,7 @@ final class Passwords
 	 * @param Key $key
 	 * @param int $cost
 	 * @return string
+	 * @throws EnvironmentIsBrokenException
 	 * @throws \Exception
 	 */
 	public static function hash(string $password, Key $key, int $cost = self::COST_DEFAULT): string
@@ -51,6 +56,8 @@ final class Passwords
 	 * @param Key $key
 	 * @param int $cost
 	 * @return bool
+	 * @throws EnvironmentIsBrokenException
+	 * @throws WrongKeyOrModifiedCiphertextException
 	 */
 	public static function needsRehash(string $hash, Key $key, int $cost = self::COST_DEFAULT): bool
 	{
@@ -64,6 +71,8 @@ final class Passwords
 	 * @param string $hash
 	 * @param Key $key
 	 * @return bool
+	 * @throws EnvironmentIsBrokenException
+	 * @throws WrongKeyOrModifiedCiphertextException
 	 */
 	public static function verify(string $password, string $hash, Key $key): bool
 	{

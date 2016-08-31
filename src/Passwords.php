@@ -44,7 +44,9 @@ final class Passwords
 	{
 		$hash = \password_hash(Base64::encode(\hash('sha384', $password, true)), PASSWORD_DEFAULT, ['cost' => $cost]);
 		if ($hash === false) {
+			// @codeCoverageIgnoreStart
 			throw new \Exception('Unknown hashing error');
+			// @codeCoverageIgnoreEnd
 		}
 		return Crypto::encrypt($hash, $key);
 	}
